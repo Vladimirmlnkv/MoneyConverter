@@ -23,6 +23,8 @@ class ConverterViewController: UIViewController {
     private let dataSource = ConverterDataSource()
     private var currentRate: Double = 1
     
+    private let keyboardAnimationTime = 0.5
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource.loadExchangeRates({
@@ -47,7 +49,7 @@ class ConverterViewController: UIViewController {
                 let k = contentView!.frame.origin.y - topCenter + headerLabel.bounds.size.height
                 let correction = (k < 0) ? abs(k) : 0
                 
-                UIView.animateWithDuration(0.5) {
+                UIView.animateWithDuration(keyboardAnimationTime) {
                     self.contentViewContraint.constant = -topCenter + correction
                     self.view.layoutIfNeeded()
                 }
@@ -56,7 +58,7 @@ class ConverterViewController: UIViewController {
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        UIView.animateWithDuration(0.3) {
+        UIView.animateWithDuration(keyboardAnimationTime) {
             self.contentViewContraint.constant = 0
             self.view.layoutIfNeeded()
         }
