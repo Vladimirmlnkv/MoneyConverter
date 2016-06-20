@@ -10,7 +10,7 @@ import UIKit
 
 class ConverterViewController: UIViewController {
 
-    @IBOutlet var headerLabel: UILabel!
+    @IBOutlet var headerView: UILabel!
     @IBOutlet var contentView: UIView!
     @IBOutlet var contentViewContraint: NSLayoutConstraint!
     
@@ -44,13 +44,12 @@ class ConverterViewController: UIViewController {
     func keyboardWillShow(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                self.view.layoutIfNeeded()
                 let topCenter = keyboardSize.height / 2
-                let k = contentView!.frame.origin.y - topCenter + headerLabel.bounds.size.height
+                let k = contentView!.bounds.origin.y - topCenter + headerView.bounds.size.height
                 let correction = (k < 0) ? abs(k) : 0
                 
                 UIView.animateWithDuration(keyboardAnimationTime) {
-                    self.contentViewContraint.constant = -topCenter + correction
+                    self.contentViewContraint.constant -= correction
                     self.view.layoutIfNeeded()
                 }
             }
