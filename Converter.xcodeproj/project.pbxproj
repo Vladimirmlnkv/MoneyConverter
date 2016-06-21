@@ -15,6 +15,8 @@
 		7EE802031D180A900081740E /* ConverterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802021D180A900081740E /* ConverterUITests.swift */; };
 		7EE802121D18103D0081740E /* ConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802111D18103D0081740E /* ConverterViewController.swift */; };
 		7EE802141D1811D20081740E /* ConverterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802131D1811D20081740E /* ConverterDataSource.swift */; };
+		7EE802251D193BDE0081740E /* ActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EE802241D193BDE0081740E /* ActivityView.xib */; };
+		7EE802271D193C1C0081740E /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802261D193C1C0081740E /* ActivityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		7EE802041D180A900081740E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EE802111D18103D0081740E /* ConverterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterViewController.swift; sourceTree = "<group>"; };
 		7EE802131D1811D20081740E /* ConverterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterDataSource.swift; sourceTree = "<group>"; };
+		7EE802241D193BDE0081740E /* ActivityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityView.xib; sourceTree = "<group>"; };
+		7EE802261D193C1C0081740E /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 				7EE802111D18103D0081740E /* ConverterViewController.swift */,
 				7EE802131D1811D20081740E /* ConverterDataSource.swift */,
 				7EE801E61D180A900081740E /* Main.storyboard */,
+				7EE8021B1D19303B0081740E /* ActivityView */,
 				7EE802101D180B070081740E /* Support */,
 			);
 			path = Converter;
@@ -134,6 +139,15 @@
 				7EE801EE1D180A900081740E /* Info.plist */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		7EE8021B1D19303B0081740E /* ActivityView */ = {
+			isa = PBXGroup;
+			children = (
+				7EE802241D193BDE0081740E /* ActivityView.xib */,
+				7EE802261D193C1C0081740E /* ActivityView.swift */,
+			);
+			name = ActivityView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EE801ED1D180A900081740E /* LaunchScreen.storyboard in Resources */,
+				7EE802251D193BDE0081740E /* ActivityView.xib in Resources */,
 				7EE801EA1D180A900081740E /* Assets.xcassets in Resources */,
 				7EE801E81D180A900081740E /* Main.storyboard in Resources */,
 			);
@@ -269,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EE801E31D180A900081740E /* AppDelegate.swift in Sources */,
+				7EE802271D193C1C0081740E /* ActivityView.swift in Sources */,
 				7EE802121D18103D0081740E /* ConverterViewController.swift in Sources */,
 				7EE802141D1811D20081740E /* ConverterDataSource.swift in Sources */,
 			);
@@ -503,6 +519,7 @@
 				7EE802091D180A900081740E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7EE8020A1D180A900081740E /* Build configuration list for PBXNativeTarget "ConverterTests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +528,7 @@
 				7EE8020C1D180A900081740E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7EE8020D1D180A900081740E /* Build configuration list for PBXNativeTarget "ConverterUITests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +537,7 @@
 				7EE8020F1D180A900081740E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

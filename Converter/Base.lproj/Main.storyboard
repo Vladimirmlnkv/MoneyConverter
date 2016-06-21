@@ -56,10 +56,20 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view hidden="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="igQ-E0-CDr" customClass="ActivityView" customModule="Converter" customModuleProvider="target">
+                                        <rect key="frame" x="190" y="49" width="100" height="100"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="LEM-7F-YMA"/>
+                                            <constraint firstAttribute="width" constant="100" id="imV-2a-W4y"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="igQ-E0-CDr" firstAttribute="centerY" secondItem="Aib-KA-nrr" secondAttribute="centerY" id="5G0-16-xDk"/>
                                     <constraint firstAttribute="bottom" secondItem="41c-SC-Vl7" secondAttribute="bottom" id="A9U-HN-J3n"/>
+                                    <constraint firstItem="igQ-E0-CDr" firstAttribute="centerX" secondItem="Aib-KA-nrr" secondAttribute="centerX" id="I8V-3A-S6G"/>
                                     <constraint firstItem="weY-CD-vbC" firstAttribute="leading" secondItem="O2A-VT-TSN" secondAttribute="leading" id="KBd-3d-Emv"/>
                                     <constraint firstItem="O2A-VT-TSN" firstAttribute="top" secondItem="weY-CD-vbC" secondAttribute="bottom" constant="8" id="ODv-3L-bqS"/>
                                     <constraint firstAttribute="trailing" secondItem="Whu-2m-HgM" secondAttribute="trailing" id="VhT-4g-LnL"/>
@@ -100,6 +110,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="igQ-E0-CDr" id="6Xl-Fe-0hU"/>
                         <outlet property="contentView" destination="Aib-KA-nrr" id="kI7-WD-QXn"/>
                         <outlet property="contentViewContraint" destination="4pW-Iv-I1y" id="pb7-P2-YP8"/>
                         <outlet property="converToLabel" destination="LaA-4D-xqh" id="yWo-bI-TIz"/>
@@ -107,6 +118,7 @@
                         <outlet property="convertFromTextField" destination="O2A-VT-TSN" id="tY3-XN-ogo"/>
                         <outlet property="convertToTextField" destination="Whu-2m-HgM" id="75C-3a-eOk"/>
                         <outlet property="headerView" destination="RA1-Z3-cbZ" id="IdJ-1I-qIU"/>
+                        <outlet property="swapButton" destination="41c-SC-Vl7" id="Vi4-9a-zYx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

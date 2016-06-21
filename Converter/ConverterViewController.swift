@@ -20,6 +20,10 @@ class ConverterViewController: UIViewController {
     @IBOutlet var convertToTextField: UITextField!
     @IBOutlet var converToLabel: UILabel!
     
+    @IBOutlet var activityView: ActivityView!
+    
+    @IBOutlet var swapButton: UIButton!
+    
     private let dataSource = ConverterDataSource()
     private var currentRate: Double = 1
     
@@ -27,16 +31,18 @@ class ConverterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showActivityView()
         dataSource.loadExchangeRates({
             self.currentRate = self.dataSource.getExchangeRate(self.convertFromLabel.text!, toCurrency: self.converToLabel.text!)
+            self.hideActivityView()
         }) { error in
             print(error)
+            self.hideActivityView()
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        convertFromTextField.becomeFirstResponder()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
@@ -60,6 +66,34 @@ class ConverterViewController: UIViewController {
         UIView.animateWithDuration(keyboardAnimationTime) {
             self.contentViewContraint.constant = 0
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func enableUI(enabled: Bool) {
+        convertFromTextField.enabled = enabled
+        swapButton.enabled = enabled
+        convertFromTextField.enabled = enabled
+        if enabled {
+            convertFromTextField.becomeFirstResponder()
+        }
+    }
+    
+    private func showActivityView() {
+        enableUI(false)
+        UIView.animateWithDuration(0.3, animations: {
+            self.activityView.hidden = false
+            self.activityView.alpha = 1.0
+        })
+    }
+    
+    private func hideActivityView() {
+        dispatch_async(dispatch_get_main_queue()) {
+            UIView.animateWithDuration(0.3, animations: {
+                self.activityView.alpha = 0
+            }) { b in
+                self.enableUI(true)
+                self.activityView.hidden = true
+            }
         }
     }
     
