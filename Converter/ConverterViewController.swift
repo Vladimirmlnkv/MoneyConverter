@@ -49,13 +49,7 @@ class ConverterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showActivityView()
-        dataSource.loadExchangeRates({
-            self.currentRate = self.dataSource.getExchangeRate(self.converFromTitle, toCurrency: self.converToTitle)
-            self.hideActivityView()
-        }) { error in
-            print(error)
-            self.hideActivityView()
-        }
+        getExchangeRate()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -86,13 +80,26 @@ class ConverterViewController: UIViewController {
         }
     }
     
+    private func getExchangeRate() {
+        dataSource.getExchangeRate(converFromTitle, toCurrency: converToTitle,
+            success: { rate in
+                self.currentRate = rate
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.hideActivityView()
+                    self.updateTextField()
+                }
+            }, failure: { error in
+                print(error)
+                self.hideActivityView()
+        })
+    }
+    
     private func enableUI(enabled: Bool) {
-        convertFromButton.enabled = enabled
-        converToButton.enabled = enabled
-        convertFromTextField.enabled = enabled
-        swapButton.enabled = enabled
-        convertFromTextField.enabled = enabled
-        if enabled {
+        convertFromButton.userInteractionEnabled = enabled
+        converToButton.userInteractionEnabled = enabled
+        convertFromTextField.userInteractionEnabled = enabled
+        swapButton.userInteractionEnabled = enabled
+        if enabled && !convertFromTextField.isFirstResponder() {
             convertFromTextField.becomeFirstResponder()
         }
     }
@@ -106,13 +113,11 @@ class ConverterViewController: UIViewController {
     }
     
     private func hideActivityView() {
-        dispatch_async(dispatch_get_main_queue()) {
-            UIView.animateWithDuration(0.3, animations: {
-                self.activityView.alpha = 0
-            }) { b in
-                self.enableUI(true)
-                self.activityView.hidden = true
-            }
+        UIView.animateWithDuration(0.3, animations: {
+            self.activityView.alpha = 0
+        }) { b in
+            self.enableUI(true)
+            self.activityView.hidden = true
         }
     }
     
@@ -122,10 +127,10 @@ class ConverterViewController: UIViewController {
     }
     
     private func updateTextField() {
-        if let d = convertFromTextField.text!.doubleValue {
-            convertToTextField.text = numberFormater.stringFromNumber(NSNumber(double: d * currentRate))
+        if let d = self.convertFromTextField.text!.doubleValue {
+            self.convertToTextField.text = self.numberFormater.stringFromNumber(NSNumber(double: d * self.currentRate))
         } else {
-            convertToTextField.text = ""
+            self.convertToTextField.text = ""
         }
     }
     
@@ -133,8 +138,7 @@ class ConverterViewController: UIViewController {
     
     @IBAction func reverseButtonAction(sender: AnyObject) {
         swapButtonTitles(converFromTitle, title2: converToTitle)
-        currentRate = dataSource.getExchangeRate(converFromTitle, toCurrency: converToTitle)
-        updateTextField()
+        getExchangeRate()
     }
     
     @IBAction func textFieldTextChangedAction(sender: AnyObject) {

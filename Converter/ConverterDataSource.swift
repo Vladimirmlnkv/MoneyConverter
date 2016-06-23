@@ -8,47 +8,38 @@
 
 import Foundation
 
+struct ExchangeData {
+    var baseCurrency: String
+    var date: String
+    var exchangeRates: [String: Double]
+}
+
 class ConverterDataSource {
     
-    private let url = "https://query.yahooapis.com/v1/public/yql?q=select+*+from+yahoo.finance.xchange+where+pair+=+%22USDRUB,EURRUB%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="
-    private var exchangeRates = [String: Double]()
+    private let url = "http://api.fixer.io/latest?base=%@"
+    private var exchangeData: ExchangeData?
     
     //MARK: - Public API
     
-    func loadExchangeRates(success: () -> Void, failure: (error: ErrorType) -> Void) {
-        NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: url)!, completionHandler: { data, response, error in
-            if error == nil && data != nil {
-                do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! [String:AnyObject]
-                    if let query = json["query"], results = query["results"], rate = results!["rate"] {
-                        let rateArray = rate as! [AnyObject]
-                        for value in rateArray {
-                            let v = value as! [String: String]
-                            let name  = v["Name"]!
-                            let rate = Double(v["Rate"]!)
-                            self.exchangeRates[name] = rate
-                        }
-                    }
-                    success()
-                } catch {
-                    // Something went wrong
-                    failure(error: error)
-                }
-            }
-        }).resume()
-    }
-    
-    func getExchangeRate(fromCurrency: String, toCurrency: String) -> Double {
-        var exchangeRate: Double = 1
-        var key = "\(fromCurrency)/\(toCurrency)"
-        if let rate = exchangeRates[key] {
-            exchangeRate = rate
+    func getExchangeRate(fromCurrency: String, toCurrency: String, success: (rate: Double) -> Void, failure: (error: ErrorType) -> Void){
+        
+        if let data = exchangeData, rate = data.exchangeRates[toCurrency] {
+            let r = data.baseCurrency == fromCurrency ? rate : 1 / rate
+            success(rate: r)
         } else {
-            key = "\(toCurrency)/\(fromCurrency)"
-            if let rate = exchangeRates[key] {
-                exchangeRate = 1 / rate
-            }
+            NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: String(format: url, fromCurrency))!, completionHandler: { data, response, error in
+                if error == nil && data != nil {
+                    do {
+                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! [String:AnyObject]
+                        if let rates = json["rates"] as? [String: Double], date = json["date"] as? String, base = json["base"] as? String {
+                            self.exchangeData = ExchangeData(baseCurrency: base, date: date, exchangeRates: rates)
+                        }
+                        success(rate: self.exchangeData!.exchangeRates[toCurrency]!)
+                    } catch {
+                        failure(error: error)
+                    }
+                }
+            }).resume()
         }
-        return exchangeRate
     }
 }
