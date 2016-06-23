@@ -17,6 +17,8 @@
 		7EE802141D1811D20081740E /* ConverterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802131D1811D20081740E /* ConverterDataSource.swift */; };
 		7EE802251D193BDE0081740E /* ActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EE802241D193BDE0081740E /* ActivityView.xib */; };
 		7EE802271D193C1C0081740E /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802261D193C1C0081740E /* ActivityView.swift */; };
+		7EE8022A1D1BD2930081740E /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802291D1BD2930081740E /* BorderedButton.swift */; };
+		7EE8022C1D1BD3720081740E /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8022B1D1BD3720081740E /* DisclosureButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		7EE802131D1811D20081740E /* ConverterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConverterDataSource.swift; sourceTree = "<group>"; };
 		7EE802241D193BDE0081740E /* ActivityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityView.xib; sourceTree = "<group>"; };
 		7EE802261D193C1C0081740E /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		7EE802291D1BD2930081740E /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		7EE8022B1D1BD3720081740E /* DisclosureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +110,7 @@
 				7EE802111D18103D0081740E /* ConverterViewController.swift */,
 				7EE802131D1811D20081740E /* ConverterDataSource.swift */,
 				7EE801E61D180A900081740E /* Main.storyboard */,
-				7EE8021B1D19303B0081740E /* ActivityView */,
+				7EE802281D1BD2810081740E /* Views */,
 				7EE802101D180B070081740E /* Support */,
 			);
 			path = Converter;
@@ -148,6 +152,16 @@
 				7EE802261D193C1C0081740E /* ActivityView.swift */,
 			);
 			name = ActivityView;
+			sourceTree = "<group>";
+		};
+		7EE802281D1BD2810081740E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7EE8022B1D1BD3720081740E /* DisclosureButton.swift */,
+				7EE802291D1BD2930081740E /* BorderedButton.swift */,
+				7EE8021B1D19303B0081740E /* ActivityView */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,7 +297,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EE8022A1D1BD2930081740E /* BorderedButton.swift in Sources */,
 				7EE801E31D180A900081740E /* AppDelegate.swift in Sources */,
+				7EE8022C1D1BD3720081740E /* DisclosureButton.swift in Sources */,
 				7EE802271D193C1C0081740E /* ActivityView.swift in Sources */,
 				7EE802121D18103D0081740E /* ConverterViewController.swift in Sources */,
 				7EE802141D1811D20081740E /* ConverterDataSource.swift in Sources */,

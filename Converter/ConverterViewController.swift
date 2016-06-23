@@ -10,15 +10,22 @@ import UIKit
 
 class ConverterViewController: UIViewController {
 
-    @IBOutlet var headerView: UILabel!
     @IBOutlet var contentView: UIView!
-    @IBOutlet var contentViewContraint: NSLayoutConstraint!
+    @IBOutlet var contentViewConstraint: NSLayoutConstraint!
     
     @IBOutlet var convertFromTextField: UITextField!
-    @IBOutlet var convertFromLabel: UILabel!
+    @IBOutlet var convertFromButton: DisclosureButton!
     
     @IBOutlet var convertToTextField: UITextField!
-    @IBOutlet var converToLabel: UILabel!
+    @IBOutlet var converToButton: DisclosureButton!
+    
+    private var converFromTitle: String {
+        return (convertFromButton.titleLabel?.text)!
+    }
+    
+    private var converToTitle: String {
+        return (converToButton.titleLabel?.text)!
+    }
     
     @IBOutlet var activityView: ActivityView!
     
@@ -33,7 +40,7 @@ class ConverterViewController: UIViewController {
         super.viewDidLoad()
         showActivityView()
         dataSource.loadExchangeRates({
-            self.currentRate = self.dataSource.getExchangeRate(self.convertFromLabel.text!, toCurrency: self.converToLabel.text!)
+            self.currentRate = self.dataSource.getExchangeRate(self.converFromTitle, toCurrency: self.converToTitle)
             self.hideActivityView()
         }) { error in
             print(error)
@@ -51,11 +58,11 @@ class ConverterViewController: UIViewController {
         if let userInfo = notification.userInfo {
             if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
                 let topCenter = keyboardSize.height / 2
-                let k = contentView!.bounds.origin.y - topCenter + headerView.bounds.size.height
+                let k = contentView!.bounds.origin.y - topCenter
                 let correction = (k < 0) ? abs(k) : 0
                 
                 UIView.animateWithDuration(keyboardAnimationTime) {
-                    self.contentViewContraint.constant -= correction
+                    self.contentViewConstraint.constant -= correction
                     self.view.layoutIfNeeded()
                 }
             }
@@ -64,12 +71,14 @@ class ConverterViewController: UIViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         UIView.animateWithDuration(keyboardAnimationTime) {
-            self.contentViewContraint.constant = 0
+            self.contentViewConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
     }
     
     private func enableUI(enabled: Bool) {
+        convertFromButton.enabled = enabled
+        converToButton.enabled = enabled
         convertFromTextField.enabled = enabled
         swapButton.enabled = enabled
         convertFromTextField.enabled = enabled
@@ -97,10 +106,9 @@ class ConverterViewController: UIViewController {
         }
     }
     
-    private func swapLabelTexts(label1: UILabel, label2: UILabel) {
-        let tmp = label1.text
-        label1.text = label2.text
-        label2.text = tmp
+    private func swapButtonTitles(title1: String, title2: String) {
+        convertFromButton.setTitle(title2, forState: .Normal)
+        converToButton.setTitle(title1, forState: .Normal)
     }
     
     private func updateTextField() {
@@ -114,8 +122,8 @@ class ConverterViewController: UIViewController {
     //MARK: - Actions
     
     @IBAction func reverseButtonAction(sender: AnyObject) {
-        swapLabelTexts(convertFromLabel!, label2: converToLabel!)
-        currentRate = dataSource.getExchangeRate(convertFromLabel.text!, toCurrency: converToLabel.text!)
+        swapButtonTitles(converFromTitle, title2: converToTitle)
+        currentRate = dataSource.getExchangeRate(converFromTitle, toCurrency: converToTitle)
         updateTextField()
     }
     
