@@ -150,14 +150,14 @@ class ConverterViewController: UIViewController {
 extension ConverterViewController: UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let hasDotOrComma = textField.text!.containsString(".") || textField.text!.containsString(",")
+        let hasSeparator = textField.text!.containsString(numberFormater.decimalSeparator)
         let notDigits = NSCharacterSet.decimalDigitCharacterSet()
         var shouldChange = false
         if let _ = string.rangeOfCharacterFromSet(notDigits) {
             shouldChange = true
         } else if string == "" {
             shouldChange = true
-        } else if string == "." || string == "," && !hasDotOrComma {
+        } else if string == numberFormater.decimalSeparator && !hasSeparator {
             if range.location == 0 {
                 textField.text = "0"
             }
