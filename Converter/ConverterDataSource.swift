@@ -33,8 +33,8 @@ class ConverterDataSource {
                         let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! [String:AnyObject]
                         if let rates = json["rates"] as? [String: Double], date = json["date"] as? String, base = json["base"] as? String {
                             self.exchangeData = ExchangeData(baseCurrency: base, date: date, exchangeRates: rates)
+                            success(rate: self.exchangeData!.exchangeRates[toCurrency]!)
                         }
-                        success(rate: self.exchangeData!.exchangeRates[toCurrency]!)
                     } catch {
                         failure(error: error)
                     }
