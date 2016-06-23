@@ -36,6 +36,16 @@ class ConverterViewController: UIViewController {
     
     private let keyboardAnimationTime = 0.5
     
+    private lazy var numberFormater: NSNumberFormatter = {
+        let nf = NSNumberFormatter()
+        nf.numberStyle = .CurrencyAccountingStyle
+        nf.currencySymbol = ""
+        nf.roundingMode = .RoundHalfUp
+        nf.maximumFractionDigits = 2
+        
+        return nf
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         showActivityView()
@@ -112,8 +122,8 @@ class ConverterViewController: UIViewController {
     }
     
     private func updateTextField() {
-        if let d = Double(convertFromTextField.text!) {
-            convertToTextField.text = String(format: "%.2f",  d * currentRate)
+        if let d = convertFromTextField.text!.doubleValue {
+            convertToTextField.text = numberFormater.stringFromNumber(NSNumber(double: d * currentRate))
         } else {
             convertToTextField.text = ""
         }
@@ -136,14 +146,14 @@ class ConverterViewController: UIViewController {
 extension ConverterViewController: UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let hasDot = textField.text!.containsString(".")
+        let hasDotOrComma = textField.text!.containsString(".") || textField.text!.containsString(",")
         let notDigits = NSCharacterSet.decimalDigitCharacterSet()
         var shouldChange = false
         if let _ = string.rangeOfCharacterFromSet(notDigits) {
             shouldChange = true
         } else if string == "" {
             shouldChange = true
-        } else if string == "." && !hasDot {
+        } else if string == "." || string == "," && !hasDotOrComma {
             if range.location == 0 {
                 textField.text = "0"
             }

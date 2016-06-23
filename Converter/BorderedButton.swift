@@ -11,6 +11,7 @@ import UIKit
 @IBDesignable
 class BorderedButton: UIButton {
     
+    @IBInspectable var cornerRadius: CGFloat = 0.0
     @IBInspectable var borderColor: UIColor = UIColor.whiteColor()
     @IBInspectable var borderWidth: CGFloat = 0.0
     
@@ -18,6 +19,7 @@ class BorderedButton: UIButton {
         super.drawRect(rect)
         layer.borderColor = borderColor.CGColor
         layer.borderWidth = borderWidth
+        layer.cornerRadius = cornerRadius
     }
 }
 
