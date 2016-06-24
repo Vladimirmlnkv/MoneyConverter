@@ -66,7 +66,7 @@ class ConverterViewController: UIViewController {
                 let correction = (k < 0) ? abs(k) : 0
                 
                 UIView.animateWithDuration(keyboardAnimationTime) {
-                    self.contentViewConstraint.constant -= correction
+                    self.contentViewConstraint.constant = -correction
                     self.view.layoutIfNeeded()
                 }
             }
