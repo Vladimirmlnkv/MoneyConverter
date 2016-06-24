@@ -31,7 +31,7 @@ class ConverterViewController: UIViewController {
     
     @IBOutlet var swapButton: UIButton!
     
-    private let dataSource = ConverterDataSource()
+    private var dataSource: ConverterDataSource!
     private var currentRate: Double = 1
     
     private let keyboardAnimationTime = 0.5
@@ -48,7 +48,7 @@ class ConverterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showActivityView()
+        dataSource = ConverterDataSource(receiver: self)
         getExchangeRate()
     }
     
@@ -81,17 +81,7 @@ class ConverterViewController: UIViewController {
     }
     
     private func getExchangeRate() {
-        dataSource.getExchangeRate(converFromTitle, toCurrency: converToTitle,
-            success: { rate in
-                self.currentRate = rate
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.hideActivityView()
-                    self.updateTextField()
-                }
-            }, failure: { error in
-                print(error)
-                self.hideActivityView()
-        })
+        dataSource.getExchangeRate(converFromTitle, toCurrency: converToTitle)
     }
     
     private func enableUI(enabled: Bool) {
@@ -113,11 +103,13 @@ class ConverterViewController: UIViewController {
     }
     
     private func hideActivityView() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.activityView.alpha = 0
-        }) { b in
-            self.enableUI(true)
-            self.activityView.hidden = true
+        if !activityView.hidden {
+            UIView.animateWithDuration(0.3, animations: {
+                self.activityView.alpha = 0
+            }) { b in
+                self.enableUI(true)
+                self.activityView.hidden = true
+            }
         }
     }
     
@@ -145,6 +137,24 @@ class ConverterViewController: UIViewController {
         updateTextField()
     }
     
+}
+
+extension ConverterViewController: ConverterDataSourceReceiver {
+    
+    func willLoadExchangeRate() {
+        showActivityView()
+    }
+    
+    func didLoadExchangeRate(rate: Double) {
+        currentRate = rate
+        self.hideActivityView()
+        self.updateTextField()
+    }
+    
+    func cantLoadData(error: ErrorType) {
+        print(error)
+        hideActivityView()
+    }
 }
 
 extension ConverterViewController: UITextFieldDelegate {
