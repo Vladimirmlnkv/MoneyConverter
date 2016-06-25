@@ -98,7 +98,6 @@ class ConverterViewController: UIViewController {
     private func enableUI(enabled: Bool) {
         convertFromButton.userInteractionEnabled = enabled
         converToButton.userInteractionEnabled = enabled
-        convertFromTextField.userInteractionEnabled = enabled
         swapButton.userInteractionEnabled = enabled
         if enabled && !convertFromTextField.isFirstResponder() {
             convertFromTextField.becomeFirstResponder()
