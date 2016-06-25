@@ -57,12 +57,16 @@ class ConverterViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         dataSource = ConverterDataSource(receiver: self)
-        getExchangeRate()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        getExchangeRate()
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -215,7 +219,6 @@ extension ConverterViewController: CurrencyTableViewControllerDelegate {
         } else {
             convertFromButton.setTitle(currency, forState: .Normal)
         }
-        getExchangeRate()
     }
 
 }
