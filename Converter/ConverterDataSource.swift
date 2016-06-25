@@ -32,10 +32,12 @@ class ConverterDataSource {
     
     //MARK: - Public API
     
-    func getExchangeRate(fromCurrency: String, toCurrency: String){
-        if let data = exchangeData, rate = data.exchangeRates[toCurrency] ?? data.exchangeRates[fromCurrency] {
-            let r = data.baseCurrency == fromCurrency ? rate : 1 / rate
-            receiver?.didLoadExchangeRate(r)
+    func getExchangeRate(fromCurrency: String, toCurrency: String) {
+        if let data = exchangeData where data.baseCurrency == fromCurrency || data.baseCurrency == toCurrency {
+            if let rate = data.exchangeRates[toCurrency] ?? data.exchangeRates[fromCurrency] {
+                let r = data.baseCurrency == fromCurrency ? rate : 1 / rate
+                receiver?.didLoadExchangeRate(r)
+            }
         } else {
             receiver?.willLoadExchangeRate()
             NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: String(format: url, fromCurrency))!, completionHandler: { data, response, error in

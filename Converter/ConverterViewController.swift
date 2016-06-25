@@ -20,11 +20,11 @@ class ConverterViewController: UIViewController {
     @IBOutlet var converToButton: DisclosureButton!
     
     private var converFromTitle: String {
-        return (convertFromButton.titleLabel?.text)!
+        return convertFromButton.titleForState(.Normal)!
     }
     
     private var converToTitle: String {
-        return (converToButton.titleLabel?.text)!
+        return converToButton.titleForState(.Normal)!
     }
     
     @IBOutlet var activityView: ActivityView!
@@ -46,16 +46,23 @@ class ConverterViewController: UIViewController {
         return nf
     }()
     
+    private let segueID = "currencyTableViewSegue"
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         dataSource = ConverterDataSource(receiver: self)
         getExchangeRate()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -128,6 +135,10 @@ class ConverterViewController: UIViewController {
     
     //MARK: - Actions
     
+    @IBAction func currencyButtonAction(sender: AnyObject) {
+        performSegueWithIdentifier(segueID, sender: sender)
+    }
+    
     @IBAction func reverseButtonAction(sender: AnyObject) {
         swapButtonTitles(converFromTitle, title2: converToTitle)
         getExchangeRate()
@@ -135,6 +146,20 @@ class ConverterViewController: UIViewController {
     
     @IBAction func textFieldTextChangedAction(sender: AnyObject) {
         updateTextField()
+    }
+    
+    //MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let currencyVC = segue.destinationViewController as! CurrencyTableViewController
+        currencyVC.currencyDelegate = self
+        if sender as! UIButton == convertFromButton {
+            currencyVC.convertDestination = .From
+            currencyVC.currentSelectedCurrency = converFromTitle
+        } else {
+            currencyVC.convertDestination = .To
+            currencyVC.currentSelectedCurrency = converToTitle
+        }
     }
     
 }
@@ -180,4 +205,17 @@ extension ConverterViewController: UITextFieldDelegate {
         convertFromTextField.resignFirstResponder()
         return true
     }
+}
+
+extension ConverterViewController: CurrencyTableViewControllerDelegate {
+    
+    func didSelectCurrency(currency: String, forConvertDestination: ConvertDestination) {
+        if forConvertDestination == .To {
+            converToButton.setTitle(currency, forState: .Normal)
+        } else {
+            convertFromButton.setTitle(currency, forState: .Normal)
+        }
+        getExchangeRate()
+    }
+
 }

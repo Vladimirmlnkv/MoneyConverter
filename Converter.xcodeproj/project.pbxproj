@@ -20,6 +20,7 @@
 		7EE8022A1D1BD2930081740E /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802291D1BD2930081740E /* BorderedButton.swift */; };
 		7EE8022C1D1BD3720081740E /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8022B1D1BD3720081740E /* DisclosureButton.swift */; };
 		7EE802311D1C2BB20081740E /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE802301D1C2BB20081740E /* StringExtension.swift */; };
+		7EF51D7F1D1E95820077DEF6 /* CurrencyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF51D7E1D1E95820077DEF6 /* CurrencyTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		7EE802291D1BD2930081740E /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		7EE8022B1D1BD3720081740E /* DisclosureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 		7EE802301D1C2BB20081740E /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		7EF51D7E1D1E95820077DEF6 /* CurrencyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		7EE801E11D180A900081740E /* Converter */ = {
 			isa = PBXGroup;
 			children = (
+				7EF51D7E1D1E95820077DEF6 /* CurrencyTableViewController.swift */,
 				7EE802111D18103D0081740E /* ConverterViewController.swift */,
 				7EE802131D1811D20081740E /* ConverterDataSource.swift */,
 				7EE801E61D180A900081740E /* Main.storyboard */,
@@ -310,6 +313,7 @@
 			files = (
 				7EE8022A1D1BD2930081740E /* BorderedButton.swift in Sources */,
 				7EE802311D1C2BB20081740E /* StringExtension.swift in Sources */,
+				7EF51D7F1D1E95820077DEF6 /* CurrencyTableViewController.swift in Sources */,
 				7EE801E31D180A900081740E /* AppDelegate.swift in Sources */,
 				7EE8022C1D1BD3720081740E /* DisclosureButton.swift in Sources */,
 				7EE802271D193C1C0081740E /* ActivityView.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable
 class DisclosureButton: UIButton {
-
+    
     override func imageRectForContentRect(contentRect:CGRect) -> CGRect {
         var imageFrame = super.imageRectForContentRect(contentRect)
         imageFrame.origin.x = CGRectGetMaxX(super.titleRectForContentRect(contentRect)) - CGRectGetWidth(imageFrame)
