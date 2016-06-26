@@ -57,6 +57,10 @@ class ConverterViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         dataSource = ConverterDataSource(receiver: self)
+        if let config = dataSource.loadConfig() {
+            converToButton.setTitle(config.convertTo, forState: .Normal)
+            convertFromButton.setTitle(config.convertFrom, forState: .Normal)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
