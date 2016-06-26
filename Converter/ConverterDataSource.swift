@@ -56,7 +56,6 @@ class ConverterDataSource {
                     do {
                         let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! [String:AnyObject]
                         if let rates = json["rates"] as? [String: Double], date = json["date"] as? String, base = json["base"] as? String {
-                            print(rates)
                             self.exchangeData = ExchangeData(baseCurrency: base, date: date, exchangeRates: rates)
                             dispatch_async(dispatch_get_main_queue()) {
                                 self.receiver?.didLoadExchangeRate(self.exchangeData!.exchangeRates[toCurrency]!)
